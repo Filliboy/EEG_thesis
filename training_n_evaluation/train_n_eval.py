@@ -1,6 +1,6 @@
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 import pytorch_lightning as pl
-from preprocessing import preprocessing
+from preprocessing import prepross_fun
 from preprocessing import data_augmentation
 import numpy as np
 import torch as t
@@ -24,29 +24,23 @@ def train_kfold(i, indices,x,y,model,ss=1,os=0,aug=0,bs=32,epochs=100):
     """Can be used in a loop, where "i" is the current fold"""
     train_index= indices[0][i]
     test_index = indices[1][i]
-    
-    x_ext_train=x[train_index]
-    y_ext_train=y[train_index]
-
-    x_ext_val=x[test_index]
-    y_ext_val=y[test_index]
 
     if ss==1:
-        x_ext_train,y_ext_train=preprocessing.data_split_n_extend(x[train_index],y[train_index], 3)
-        x_ext_val,y_ext_val=preprocessing.data_split_n_extend(x[test_index],y[test_index],3)
+        x_ext_train,y_ext_train=prepross_fun.data_split_n_extend(x[train_index],y[train_index], 3)
+        x_ext_val,y_ext_val=prepross_fun.data_split_n_extend(x[test_index],y[test_index],3)
 
     if os==1:
-        x_ext_train,y_ext_train=preprocessing.overlap_split(x[train_index],y[train_index])
+        x_ext_train,y_ext_train=prepross_fun.overlap_split(x[train_index],y[train_index])
 
-        x_ext_val,y_ext_val=preprocessing.overlap_split(x[test_index],y[test_index])
+        x_ext_val,y_ext_val=prepross_fun.overlap_split(x[test_index],y[test_index])
 
     if aug==1:
         x_ext_train,y_ext_train=data_augmentation.augmentation_pipeline_offline(x_ext_train,y_ext_train,bs=9)
 
-    x_train,x_val=preprocessing.scaler_scipy(x_ext_train,x_ext_val)
+    x_train,x_val=prepross_fun.scaler_scipy(x_ext_train,x_ext_val)
 
     x_train=t.tensor(x_train)
-    x_val=t.tensor(x_train)
+    x_val=t.tensor(x_val)
 
     x_train=x_train.view(x_train.shape[0],x_train.shape[2],x_train.shape[1])
     x_val=x_val.view(x_val.shape[0],x_val.shape[2],x_val.shape[1])

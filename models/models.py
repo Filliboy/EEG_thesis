@@ -121,7 +121,7 @@ class ResNet(pl.LightningModule):
         x=self.out_a(x)
         return x
 
-    def training_step(self, train_batch):
+    def training_step(self, train_batch, batch_idx):
         x,y=train_batch
         y_hat=self.forward(x)
 
@@ -272,7 +272,7 @@ class InceptionTime(pl.LightningModule):
         return x
 
 
-    def training_step(self, train_batch):
+    def training_step(self, train_batch, batch_idx):
         x,y=train_batch
         y_hat=self.forward(x)
 
@@ -291,7 +291,7 @@ class InceptionTime(pl.LightningModule):
         self.log('train_loss', loss)
         return loss
 
-    def validation_step(self, val_batch):
+    def validation_step(self, val_batch, batch_idx):
         x,y=val_batch
         y_hat=self.forward(x)
 
@@ -429,7 +429,7 @@ class EEG_net(pl.LightningModule):
         x=self.out_a(x)
         return x
   
-    def training_step(self, train_batch):
+    def training_step(self, train_batch, batch_idx):
         x,y=train_batch
         y_hat=self.forward(x)
 
@@ -448,7 +448,7 @@ class EEG_net(pl.LightningModule):
         self.log('train_loss', loss)
         return loss
 
-    def validation_step(self, val_batch):
+    def validation_step(self, val_batch, batch_idx):
         x,y=val_batch
         y_hat=self.forward(x)
 
