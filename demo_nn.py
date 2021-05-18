@@ -8,7 +8,7 @@ from models import models
 
 
 def main():
-    path="C:/Users/filip/OneDrive/Exjobb/data_collection/data_ordered/"
+    path="data_demo/"
 
     x,y=data_prep_and_load.load_d(path)
     
@@ -35,7 +35,7 @@ def main():
         all_maj_acc[i]=maj_acc
         all_samp_acc[i]=samp_acc
 
-    print(all_maj_acc.mean(),all_samp_acc.mean())
+    print("Mean acc majority vote: "+str(all_maj_acc.mean()),"Mean acc per sample vote: "+str(all_samp_acc.mean()))
 
 if __name__ =='__main__':
     main()
