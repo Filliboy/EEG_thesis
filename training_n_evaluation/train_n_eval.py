@@ -76,6 +76,7 @@ def majority_voting(model,x,y,num_classes,split):
               maj_y[i]=1
            else:
               maj_y[i]=0
+              
         else:
             for j in range(split):
                 max_list[j]= y_hat[i*split+j].argmax()
