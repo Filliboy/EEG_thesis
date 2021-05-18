@@ -9,11 +9,11 @@ from data_loading.data_prep_and_load import load_d, bin_label
 
 def main():
 
-    path="C:/Users/filip/OneDrive/Exjobb/data_collection/data_ordered/"
+    path="data_demo/"
 
     x,y=load_d(path)
 
-    y=bin_label(y,lable=1)
+    y=bin_label(y,label=1)
 
     feats=prepross_fun.filter_n_DE(x[:,128*3:,:])
 

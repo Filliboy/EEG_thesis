@@ -123,7 +123,13 @@ def split_labels_per_subject(path,label=0):
     print(y.shape,y.dtype)
     return y
 
-def bin_label(y,lable):
+def bin_label(y,label):
     """Returns binary labels. Label=0 likeability, 1=valence,2=arousal"""
-    return (y[:,lable]>5).astype(int)
+    if label==0:
+      print('Likeability')
+    if label==1:
+      print('Valence')
+    if label==2:
+      print('Arousal')
+    return (y[:,label]>5).astype(int)
 

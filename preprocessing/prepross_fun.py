@@ -56,17 +56,16 @@ def data_split_n_extend(x,y,split):
 def overlap_split(x,y):
     """Creates 50% overlapping 10 second segments"""
     split=5
-    x_ext=np.zeros((x.shape[0]*split, int(x.shape[1]/3),x.shape[2])).astype(np.float32)
+    x_ext=[]
     y_ext=np.empty((int(x.shape[0]*split)))
-
     for i in range(x.shape[0]):
         split1=np.split(x[i,0:3200].astype(np.float32),split,axis=0)#10x3200x14
         split2=np.split(x[i,640:].astype(np.float32),split,axis=0)
-        x_ext[i*split]  =np.concatenate((split1[0], split1[1]),axis=0).astype(np.float32)
-        x_ext[i*split+1]=np.concatenate((split2[0], split2[1]),axis=0).astype(np.float32)
-        x_ext[i*split+2]=np.concatenate((split1[2], split1[3]),axis=0).astype(np.float32)
-        x_ext[i*split+3]=np.concatenate((split2[2], split2[3]),axis=0).astype(np.float32)
-        x_ext[i*split+4]=np.concatenate((split1[4], split2[4]),axis=0).astype(np.float32)
+        x_ext.append(np.concatenate((split1[0], split1[1]),axis=0).astype(np.float32))
+        x_ext.append(np.concatenate((split2[0], split2[1]),axis=0).astype(np.float32))
+        x_ext.append(np.concatenate((split1[2], split1[3]),axis=0).astype(np.float32))
+        x_ext.append(np.concatenate((split2[2], split2[3]),axis=0).astype(np.float32))
+        x_ext.append(np.concatenate((split1[4], split2[4]),axis=0).astype(np.float32))
 
         if y[i]==2:
             y_ext[i*split:(i+1)*split]=2
@@ -74,7 +73,7 @@ def overlap_split(x,y):
             y_ext[i*split:(i+1)*split]=1
         else:
             y_ext[i*split:(i+1)*split]=0
-
+    x_ext=np.array(x_ext)
     y_ext=y_ext.astype(int)
     print(x_ext.shape,x_ext.dtype,y_ext.shape,y_ext.dtype,y_ext.sum()/y_ext.shape[0]==y.sum()/y.shape[0])
     return x_ext,y_ext

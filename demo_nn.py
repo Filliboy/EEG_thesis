@@ -14,7 +14,7 @@ def main():
     
     x = prepross_fun.bp_n_cat(x)
     #Likeability
-    y = data_prep_and_load.bin_label(y,lable=0)
+    y = data_prep_and_load.bin_label(y,label=0)
     
     kf= KFold(5,shuffle=False)
  
