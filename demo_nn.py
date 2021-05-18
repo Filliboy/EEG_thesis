@@ -22,11 +22,11 @@ def main():
     indices=list(zip(*gen))
     no_class=1
 
-    model=models.EEG_net(seq_len=1280,in_ch=70, bottle_neck_size=20,filters=32, num_classes=no_class)
-
     all_samp_acc=np.zeros(5)
     all_maj_acc=np.zeros(5)
     for i in range(5):
+        model=models.EEG_net(seq_len=1280,in_ch=70, bottle_neck_size=20,filters=32, num_classes=no_class)
+
         model,x_val,y_val= train_kfold(i,indices,x,y,model,ss=0,os=1,aug=0)
 
         maj_acc,samp_acc=majority_voting(model,x_val,y_val,num_classes=no_class,split=5)
